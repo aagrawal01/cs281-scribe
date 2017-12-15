@@ -180,4 +180,28 @@ We did an example iPython notebook (KL.ipynb) in class.
 \smallskip
 Next class, we will use the reverse projection to get Q. This is called "variational inference".
 
+\subsection{Exercises}
+\subsubsection{Exercise 1: Uniform Distribution Maximizes Entropy}
+It is perhaps obvious from the intuitive explanation of information entropy that uniform distributions maximize entropy, but the goal of this exercise is to formally prove this for discrete distributions. Show that if we have an $n$-sided die such that side $i$ shows up with probability $p_i$, then the entropy of a die roll $X$ is maximized when $p_1 = p_2 = \cdots = p_n = \frac{1}{n}$. 
+\begin{proof}
+The entropy of the die roll is:
+$$H(p_1, \ldots, p_n) = - \sum_{i=1}^n p_i \log{(p_i)} = \sum_{i=1}^n \log{\Big(\frac{1}{p_i}\Big)^{p_i}} = \log{\prod_{i=1}^n \Big(\frac{1}{p_i} \Big)^{p_i} }$$
+Since $\log{x}$ is a strictly increasing function, maximizing $H$ is equivalent to maximizing the expression
+$\prod_{i=1}^n \Big(\frac{1}{p_i} \Big)^{p_i} $. Recall the weighted AM-GM inequality:
+\\\\
+\textbf{Weighted AM-GM}: If $w_i \geq 0$ with $\sum_{i=0}^n w_i = w > 0$, $x_i\geq 0$, then the following inequality holds with equality if and only if the $x_i$ are equal. 
+$$\frac{\sum w_i x_i}{w} \geq \sqrt[w]{\prod x_i^{w_i}}$$
+\begin{proof}
+To prove weighted AM-GM, we apply Jensen's inequality to the logarithm, noting that the logarithm is concave. Assume that all weights are positive (as 0 weights have no effect). We want to show strict inequality if the $x_i$ are not all equal. We can trivially assume the $x_i$ are all positive as if one is 0, then the claim is manifestly true. 
+\begin{align*}
+\ln\Bigl(\frac{w_1x_1+\cdots+w_nx_n}w\Bigr) & >\frac{w_1}w\ln x_1+\cdots+\frac{w_n}w\ln x_n \\
+& =\ln \sqrt[w]{x_1^{w_1} x_2^{w_2} \cdots x_n^{w_n}}.
+\end{align*}
+The conclusion follows as the logarithm is monotone.
+\end{proof}
+Applying Weighted AM-GM to $\prod_{i=1}^n \Big(\frac{1}{p_i} \Big)^{p_i}$, with  $w_i= p_i$, $x_i = \frac{1}{p_i}$ we get, noting that all quantities are non-negative and that $w = \sum w_i = 1$:
+$$\sum_{i=1}^n p_i \frac{1}{p_i} \geq \prod_{i=1}^n \Big(\frac{1}{p_i} \Big)^{p_i} \implies n \geq \prod_{i=1}^n \Big(\frac{1}{p_i} \Big)^{p_i}$$
+The LHS is constant, and so the maximum value of the expression occurs when the quantities $\frac{1}{p_i}$ are equal by the equality condition of weighted AM-GM. The conclusion follows (and also that the maximum entropy is $\log_2{n}$). 
+\end{proof} 
+
 \end{document}
